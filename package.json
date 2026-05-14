@@ -1,0 +1,50 @@
+{
+  "name": "wealth-tracker",
+  "version": "1.0.0",
+  "description": "个人资产管理系统",
+  "scripts": {
+    "dev:mp-weixin": "uni -p mp-weixin",
+    "build:mp-weixin": "uni build -p mp-weixin && node scripts/postbuild-mp.js",
+    "dev:h5": "uni",
+    "build:h5": "uni build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.vue",
+    "format": "prettier --write \"**/*.{ts,vue,json,scss,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,vue,json,scss,md}\"",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run build:mp-weixin"
+  },
+  "dependencies": {
+    "@dcloudio/uni-app": "3.0.0-alpha-5000820260508001",
+    "@dcloudio/uni-h5": "3.0.0-alpha-5000820260508001",
+    "@dcloudio/uni-mp-weixin": "3.0.0-alpha-5000820260508001",
+    "pinia": "2.3.1",
+    "vue": "3.5.34"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "3.4.31",
+    "@dcloudio/uni-cli-shared": "3.0.0-alpha-5000820260508001",
+    "@dcloudio/vite-plugin-uni": "3.0.0-alpha-5000820260508001",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "eslint": "8.57.1",
+    "eslint-plugin-vue": "9.33.0",
+    "prettier": "3.3.3",
+    "sass": "1.72.0",
+    "typescript": "5.4.5",
+    "vite": "5.2.8",
+    "vitest": "1.6.1",
+    "vue-eslint-parser": "9.4.3"
+  },
+  "overrides": {
+    "@vue/compiler-core": "3.5.34",
+    "@vue/compiler-dom": "3.5.34",
+    "@vue/compiler-sfc": "3.5.34",
+    "@vue/compiler-ssr": "3.5.34",
+    "@vue/reactivity": "3.5.34",
+    "@vue/runtime-core": "3.5.34",
+    "@vue/runtime-dom": "3.5.34",
+    "@vue/server-renderer": "3.5.34",
+    "@vue/shared": "3.5.34"
+  }
+}
