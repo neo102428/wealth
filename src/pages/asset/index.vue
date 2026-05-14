@@ -2,19 +2,18 @@
 import { ref, computed } from 'vue'
 import RecordListPage from '@/components/common/RecordListPage.vue'
 import { useAssetStore } from '@/stores/asset'
-import { ASSET_TYPE_LABELS, ASSET_TYPE_ICONS } from '@/types'
-import type { AssetType } from '@/types'
+import { useCustomAssetTypeStore } from '@/stores/customAssetType'
 import { formatAmount } from '@/utils/format'
 
 const assetStore = useAssetStore()
+const customTypeStore = useCustomAssetTypeStore()
 
-const activeFilter = ref<AssetType | 'all'>('all')
+const activeFilter = ref<string>('all')
 
 const filterOptions = computed(() => {
-  const opts: { key: AssetType | 'all'; label: string }[] = [{ key: 'all', label: '全部' }]
-  const types: AssetType[] = ['cash', 'fixed', 'investment', 'credit', 'other']
-  for (const t of types) {
-    opts.push({ key: t, label: ASSET_TYPE_LABELS[t] })
+  const opts: { key: string; label: string }[] = [{ key: 'all', label: '全部' }]
+  for (const t of customTypeStore.allAssetTypes) {
+    opts.push({ key: t, label: customTypeStore.getLabel(t) })
   }
   return opts
 })
@@ -27,7 +26,7 @@ const filteredAssets = computed(() => {
 const listItems = computed(() =>
   filteredAssets.value.map((item) => ({
     id: item.id,
-    icon: ASSET_TYPE_ICONS[item.type],
+    icon: customTypeStore.getIcon(item.type),
     name: item.name,
     meta: `${item.category} · ${item.institution || '--'}`,
     amount: formatAmount(item.currentValue),

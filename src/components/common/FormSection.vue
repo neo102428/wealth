@@ -6,10 +6,10 @@
 
 <style lang="scss" scoped>
 .form-card {
-  background: #fff;
+  background: $card-bg;
   margin: 20rpx;
-  border-radius: 16rpx;
+  border-radius: $card-radius;
   padding: 8rpx 28rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: $card-shadow;
 }
 </style>

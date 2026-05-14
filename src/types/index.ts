@@ -1,17 +1,28 @@
-export type AssetType = 'cash' | 'fixed' | 'investment' | 'credit' | 'other'
+export type AssetType = string
+
+export const BUILTIN_ASSET_TYPES: AssetType[] = ['cash', 'fixed', 'investment', 'credit', 'other']
+
+export interface CustomAssetType {
+  key: string
+  label: string
+  icon: string
+}
 
 export type ValuationMethod = 'market' | 'cost' | 'income' | 'net'
 
-export type LiabilityType =
-  | 'mortgage'
-  | 'car_loan'
-  | 'credit_card'
-  | 'huabei'
-  | 'jiebei'
-  | 'online_loan'
-  | 'installment'
-  | 'friend_loan'
-  | 'other'
+export type LiabilityType = string
+
+export const BUILTIN_LIABILITY_TYPES: LiabilityType[] = [
+  'mortgage',
+  'car_loan',
+  'credit_card',
+  'huabei',
+  'jiebei',
+  'online_loan',
+  'installment',
+  'friend_loan',
+  'other',
+]
 
 export interface ValuationHistory {
   id: string
@@ -91,7 +102,7 @@ export interface UserInfo {
   email: string
 }
 
-export const ASSET_TYPE_LABELS: Record<AssetType, string> = {
+export const ASSET_TYPE_LABELS: Record<string, string> = {
   cash: '现金资产',
   fixed: '固定资产',
   investment: '投资资产',
@@ -99,7 +110,7 @@ export const ASSET_TYPE_LABELS: Record<AssetType, string> = {
   other: '其他资产',
 }
 
-export const ASSET_TYPE_ICONS: Record<AssetType, string> = {
+export const ASSET_TYPE_ICONS: Record<string, string> = {
   cash: '💰',
   fixed: '🏠',
   investment: '📈',
@@ -107,7 +118,7 @@ export const ASSET_TYPE_ICONS: Record<AssetType, string> = {
   other: '📦',
 }
 
-export const ASSET_CATEGORIES: Record<AssetType, string[]> = {
+export const ASSET_CATEGORIES: Record<string, string[]> = {
   cash: ['银行存款', '现金', '第三方支付', '货币基金', '其他'],
   fixed: ['房产', '车辆', '土地', '设备', '其他'],
   investment: ['股票', '基金', '理财产品', '信托', '其他'],
@@ -122,7 +133,7 @@ export const VALUATION_METHOD_LABELS: Record<ValuationMethod, string> = {
   net: '净值法',
 }
 
-export const LIABILITY_TYPE_LABELS: Record<LiabilityType, string> = {
+export const LIABILITY_TYPE_LABELS: Record<string, string> = {
   mortgage: '房贷',
   car_loan: '车贷',
   credit_card: '信用卡',
@@ -134,7 +145,7 @@ export const LIABILITY_TYPE_LABELS: Record<LiabilityType, string> = {
   other: '其他负债',
 }
 
-export const LIABILITY_TYPE_ICONS: Record<LiabilityType, string> = {
+export const LIABILITY_TYPE_ICONS: Record<string, string> = {
   mortgage: '🏠',
   car_loan: '🚗',
   credit_card: '💳',

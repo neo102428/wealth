@@ -33,7 +33,7 @@ const emit = defineEmits<{
   text-align: center;
   color: #fff;
   font-size: 32rpx;
-  border-radius: 16rpx;
+  border-radius: $card-radius;
   border: none;
 
   &::after {
@@ -42,10 +42,10 @@ const emit = defineEmits<{
 }
 
 .tone-blue {
-  background: #2979ff;
+  background: $primary-color;
 }
 
 .tone-red {
-  background: #f44336;
+  background: $danger-color;
 }
 </style>

@@ -64,11 +64,11 @@ function handleLogout() {
 }
 
 .user-header {
-  background: #fff;
+  background: $card-bg;
   padding: 48rpx 32rpx 36rpx;
   margin: 20rpx;
-  border-radius: 16rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  border-radius: $card-radius;
+  box-shadow: $card-shadow;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -99,15 +99,15 @@ function handleLogout() {
 
 .user-phone {
   font-size: 26rpx;
-  color: #999;
+  color: $text-hint;
 }
 
 .menu-section {
-  background: #fff;
+  background: $card-bg;
   margin: 0 20rpx;
-  border-radius: 16rpx;
+  border-radius: $card-radius;
   overflow: hidden;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: $card-shadow;
 }
 
 .menu-item {
@@ -150,12 +150,12 @@ function handleLogout() {
   height: 88rpx;
   line-height: 88rpx;
   text-align: center;
-  background: #fff;
-  color: #f44336;
+  background: $card-bg;
+  color: $danger-color;
   font-size: 30rpx;
-  border-radius: 16rpx;
+  border-radius: $card-radius;
   border: none;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: $card-shadow;
 
   &::after {
     border: none;

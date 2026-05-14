@@ -2,29 +2,18 @@
 import { ref, computed } from 'vue'
 import RecordListPage from '@/components/common/RecordListPage.vue'
 import { useLiabilityStore } from '@/stores/liability'
-import { LIABILITY_TYPE_LABELS, LIABILITY_TYPE_ICONS } from '@/types'
-import type { LiabilityType } from '@/types'
+import { useCustomLiabilityTypeStore } from '@/stores/customLiabilityType'
 import { formatAmount } from '@/utils/format'
 
 const liabilityStore = useLiabilityStore()
+const customLiabilityTypeStore = useCustomLiabilityTypeStore()
 
-const activeFilter = ref<LiabilityType | 'all'>('all')
+const activeFilter = ref<string>('all')
 
 const filterOptions = computed(() => {
-  const opts: { key: LiabilityType | 'all'; label: string }[] = [{ key: 'all', label: '全部' }]
-  const types: LiabilityType[] = [
-    'mortgage',
-    'car_loan',
-    'credit_card',
-    'huabei',
-    'jiebei',
-    'online_loan',
-    'installment',
-    'friend_loan',
-    'other',
-  ]
-  for (const t of types) {
-    opts.push({ key: t, label: LIABILITY_TYPE_LABELS[t] })
+  const opts: { key: string; label: string }[] = [{ key: 'all', label: '全部' }]
+  for (const t of customLiabilityTypeStore.allLiabilityTypes) {
+    opts.push({ key: t, label: customLiabilityTypeStore.getLabel(t) })
   }
   return opts
 })
@@ -37,10 +26,10 @@ const filteredLiabilities = computed(() => {
 const listItems = computed(() =>
   filteredLiabilities.value.map((item) => ({
     id: item.id,
-    icon: LIABILITY_TYPE_ICONS[item.type],
+    icon: customLiabilityTypeStore.getIcon(item.type),
     name: item.name,
     meta: [
-      LIABILITY_TYPE_LABELS[item.type],
+      customLiabilityTypeStore.getLabel(item.type),
       item.institution,
       item.monthlyPayment > 0 ? `月供 ¥${item.monthlyPayment.toFixed(0)}` : '',
     ]

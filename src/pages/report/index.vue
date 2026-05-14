@@ -297,8 +297,8 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 .tab-bar {
   display: flex;
   margin: 20rpx 20rpx 0;
-  background: #fff;
-  border-radius: 12rpx;
+  background: $card-bg;
+  border-radius: $radius-md;
   overflow: hidden;
 }
 
@@ -307,11 +307,11 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
   text-align: center;
   padding: 24rpx 0;
   font-size: 28rpx;
-  color: #666;
+  color: $text-secondary;
   position: relative;
 
   &.active {
-    color: #2979ff;
+    color: $primary-color;
     font-weight: 600;
 
     &::after {
@@ -322,7 +322,7 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
       transform: translateX(-50%);
       width: 48rpx;
       height: 4rpx;
-      background: #2979ff;
+      background: $primary-color;
       border-radius: 2rpx;
     }
   }
@@ -342,10 +342,10 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
-  background: #2979ff;
+  background: $primary-color;
   color: #fff;
   font-size: 28rpx;
-  border-radius: 12rpx;
+  border-radius: $radius-md;
   border: none;
 
   &::after {
@@ -384,16 +384,16 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 
   .badge-up {
     background: rgba(76, 175, 80, 0.1);
-    color: #4caf50;
+    color: $success-color;
   }
   .badge-down {
     background: rgba(244, 67, 54, 0.1);
-    color: #f44336;
+    color: $danger-color;
   }
 
   .latest-tag {
     font-size: 22rpx;
-    color: #2979ff;
+    color: $primary-color;
     background: rgba(41, 121, 255, 0.08);
     padding: 4rpx 14rpx;
     border-radius: 6rpx;
@@ -416,7 +416,7 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
   .sum-label {
     display: block;
     font-size: 22rpx;
-    color: #999;
+    color: $text-hint;
     margin-bottom: 4rpx;
   }
   .sum-value {
@@ -426,20 +426,20 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 }
 
 .text-green {
-  color: #4caf50;
+  color: $success-color;
 }
 .text-red {
-  color: #f44336;
+  color: $danger-color;
 }
 
 .breakdown {
-  border-top: 1rpx solid #f0f0f0;
+  border-top: 1rpx solid $border-color-light;
   padding-top: 16rpx;
 }
 
 .breakdown-title {
   font-size: 24rpx;
-  color: #999;
+  color: $text-hint;
   margin-bottom: 10rpx;
   display: block;
 }
@@ -464,11 +464,11 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 
 .breakdown-label {
   font-size: 24rpx;
-  color: #999;
+  color: $text-hint;
 }
 .breakdown-value {
   font-size: 24rpx;
-  color: #333;
+  color: $text-primary;
   font-weight: 500;
 }
 
@@ -478,7 +478,7 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 
   .empty-text {
     display: block;
-    color: #999;
+    color: $text-hint;
     font-size: 28rpx;
     margin-bottom: 8rpx;
   }
@@ -494,15 +494,15 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff;
+  background: $card-bg;
   margin-top: 20rpx;
   padding: 16rpx 28rpx;
-  border-radius: 12rpx;
+  border-radius: $radius-md;
 }
 
 .picker-arrow {
   font-size: 48rpx;
-  color: #2979ff;
+  color: $primary-color;
   padding: 0 12rpx;
   line-height: 1;
 
@@ -519,12 +519,12 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
   display: block;
   font-size: 34rpx;
   font-weight: 600;
-  color: #333;
+  color: $text-primary;
 }
 
 .picker-switch {
   font-size: 22rpx;
-  color: #2979ff;
+  color: $primary-color;
 }
 
 .month-actions {
@@ -535,7 +535,7 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 .link-btn {
   display: inline-block;
   font-size: 26rpx;
-  color: #2979ff;
+  color: $primary-color;
   padding: 8rpx 24rpx;
 }
 
@@ -575,14 +575,14 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
   }
   .month-snapshot-count {
     font-size: 24rpx;
-    color: #999;
+    color: $text-hint;
   }
 }
 
 .networth-change-card {
   text-align: center;
   padding: 28rpx;
-  border-radius: 12rpx;
+  border-radius: $radius-md;
   margin-bottom: 24rpx;
 
   &.nw-up {
@@ -595,7 +595,7 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
   .nw-label {
     display: block;
     font-size: 26rpx;
-    color: #999;
+    color: $text-hint;
     margin-bottom: 8rpx;
   }
   .nw-amount {
@@ -605,10 +605,10 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 }
 
 .nw-up .nw-amount {
-  color: #4caf50;
+  color: $success-color;
 }
 .nw-down .nw-amount {
-  color: #f44336;
+  color: $danger-color;
 }
 
 .compare-section {
@@ -620,13 +620,13 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 .compare-col {
   flex: 1;
   background: #f8f8f8;
-  border-radius: 10rpx;
+  border-radius: $radius-sm;
   padding: 16rpx 14rpx;
 
   .compare-title {
     display: block;
     font-size: 22rpx;
-    color: #999;
+    color: $text-hint;
     margin-bottom: 10rpx;
     text-align: center;
   }
@@ -639,7 +639,7 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 
   .arrow-icon {
     font-size: 32rpx;
-    color: #2979ff;
+    color: $primary-color;
   }
 }
 
@@ -650,7 +650,7 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 
   .compare-label {
     font-size: 24rpx;
-    color: #999;
+    color: $text-hint;
   }
   .compare-value {
     font-size: 24rpx;
@@ -665,7 +665,7 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 
   .compare-label {
     font-weight: 600;
-    color: #333;
+    color: $text-primary;
   }
   .compare-value {
     font-weight: 600;
@@ -673,7 +673,7 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 }
 
 .changes-section {
-  border-top: 1rpx solid #f0f0f0;
+  border-top: 1rpx solid $border-color-light;
   padding-top: 20rpx;
 }
 
@@ -703,7 +703,7 @@ const monthlyAssetChanges: { key: AssetType; label: string; field: keyof Monthly
 
   .change-label {
     font-size: 24rpx;
-    color: #999;
+    color: $text-hint;
   }
   .change-value {
     font-size: 24rpx;

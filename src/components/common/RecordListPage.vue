@@ -10,6 +10,7 @@ interface RecordListItem {
   name: string
   meta: string
   amount: string
+  amountClass?: string
 }
 
 withDefaults(
@@ -23,9 +24,11 @@ withDefaults(
     items: RecordListItem[]
     emptyText: string
     emptyActionText: string
+    showFab?: boolean
   }>(),
   {
     tone: 'green',
+    showFab: true,
   },
 )
 
@@ -56,6 +59,7 @@ const emit = defineEmits<{
         >
           {{ opt.label }}
         </view>
+        <slot name="extra-filter" />
       </view>
     </scroll-view>
 
@@ -79,7 +83,7 @@ const emit = defineEmits<{
           </view>
         </view>
         <view class="item-right">
-          <text class="item-amount">{{ item.amount }}</text>
+          <text :class="['item-amount', item.amountClass]">{{ item.amount }}</text>
           <view class="delete-btn" @click.stop="emit('remove', item.id, item.name)">
             <text class="delete-icon">删</text>
           </view>
@@ -87,7 +91,7 @@ const emit = defineEmits<{
       </view>
     </view>
 
-    <view class="fab" @click="emit('add')">
+    <view v-if="showFab" class="fab" @click="emit('add')">
       <text class="fab-text">+</text>
     </view>
   </view>
@@ -99,16 +103,16 @@ const emit = defineEmits<{
 }
 
 .header-bar {
-  background: #fff;
+  background: $card-bg;
   padding: 28rpx;
   margin: 20rpx;
-  border-radius: 16rpx;
+  border-radius: $card-radius;
   text-align: center;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: $card-shadow;
 
   .header-label {
     font-size: 26rpx;
-    color: #999;
+    color: $text-hint;
   }
 
   .header-amount {
@@ -120,7 +124,7 @@ const emit = defineEmits<{
 
   .header-sub {
     font-size: 24rpx;
-    color: #999;
+    color: $text-hint;
     margin-top: 4rpx;
   }
 }
@@ -140,9 +144,9 @@ const emit = defineEmits<{
   display: inline-block;
   padding: 12rpx 24rpx;
   font-size: 26rpx;
-  color: #666;
-  background: #fff;
-  border-radius: 32rpx;
+  color: $text-secondary;
+  background: $card-bg;
+  border-radius: $radius-pill;
   white-space: nowrap;
 
   &.active {
@@ -156,7 +160,7 @@ const emit = defineEmits<{
 
   .empty-text {
     display: block;
-    color: #999;
+    color: $text-hint;
     font-size: 28rpx;
     margin-bottom: 24rpx;
   }
@@ -165,7 +169,7 @@ const emit = defineEmits<{
     display: inline-block;
     padding: 16rpx 48rpx;
     color: #fff;
-    border-radius: 32rpx;
+    border-radius: $radius-pill;
     font-size: 28rpx;
   }
 }
@@ -208,7 +212,7 @@ const emit = defineEmits<{
   .item-meta {
     display: block;
     font-size: 24rpx;
-    color: #999;
+    color: $text-hint;
     margin-top: 4rpx;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -237,7 +241,7 @@ const emit = defineEmits<{
 
     .delete-icon {
       font-size: 24rpx;
-      color: #999;
+      color: $text-hint;
     }
   }
 }
@@ -263,38 +267,55 @@ const emit = defineEmits<{
 
 .tone-green {
   .header-amount {
-    color: #4caf50;
+    color: $success-color;
   }
 
   .filter-tag.active,
   .empty-action,
   .fab {
-    background: #2979ff;
+    background: $primary-color;
   }
 
   .fab {
-    box-shadow: 0 8rpx 24rpx rgba(41, 121, 255, 0.35);
+    box-shadow: $shadow-primary-btn;
   }
 
   .item-amount {
-    color: #333;
+    color: $text-primary;
   }
 }
 
 .tone-red {
   .header-amount,
   .item-amount {
-    color: #f44336;
+    color: $danger-color;
   }
 
   .filter-tag.active,
   .empty-action,
   .fab {
-    background: #f44336;
+    background: $danger-color;
   }
 
   .fab {
-    box-shadow: 0 8rpx 24rpx rgba(244, 67, 54, 0.35);
+    box-shadow: $shadow-danger-btn;
   }
+}
+
+.filter-tag-mgr {
+  color: $primary-color;
+  border: 1rpx dashed $primary-color;
+  background: transparent;
+  font-size: 22rpx;
+  font-weight: 600;
+  letter-spacing: -2rpx;
+}
+
+.amount-green {
+  color: $success-color;
+}
+
+.amount-red {
+  color: $danger-color;
 }
 </style>

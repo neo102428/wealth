@@ -1,21 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import FormActions from '@/components/common/FormActions.vue'
 import FormField from '@/components/common/FormField.vue'
 import FormSection from '@/components/common/FormSection.vue'
 import { useLiabilityStore } from '@/stores/liability'
-import { LIABILITY_TYPE_LABELS } from '@/types'
-import type { LiabilityType } from '@/types'
+import { useCustomLiabilityTypeStore } from '@/stores/customLiabilityType'
 
 const liabilityStore = useLiabilityStore()
+const customLiabilityTypeStore = useCustomLiabilityTypeStore()
 
 const isEdit = ref(false)
 const editId = ref('')
+const isTypePreset = ref(false)
 
 const form = ref({
   name: '',
-  type: 'mortgage' as LiabilityType,
+  type: 'mortgage',
   initialAmount: '',
   remainingAmount: '',
   rate: '',
@@ -26,17 +27,10 @@ const form = ref({
 
 const errors = ref<Record<string, string>>({})
 
-const typeOptions: LiabilityType[] = [
-  'mortgage',
-  'car_loan',
-  'credit_card',
-  'huabei',
-  'jiebei',
-  'online_loan',
-  'installment',
-  'friend_loan',
-  'other',
-]
+const typeOptions = computed(() => customLiabilityTypeStore.allLiabilityTypes)
+const typeLabels = computed(() =>
+  typeOptions.value.map((t) => customLiabilityTypeStore.getLabel(t)),
+)
 
 const repaymentDayOptions = Array.from({ length: 31 }, (_, i) => i + 1)
 
@@ -44,6 +38,13 @@ const typeIndex = ref(0)
 const repaymentDayIndex = ref(0)
 
 onLoad((options?: any) => {
+  const presetType = options?.type
+  if (presetType) {
+    form.value.type = presetType
+    isTypePreset.value = true
+    typeIndex.value = typeOptions.value.indexOf(presetType)
+  }
+
   const id = options?.id
   if (id) {
     const liability = liabilityStore.liabilities.find((l) => l.id === id)
@@ -60,7 +61,7 @@ onLoad((options?: any) => {
         repaymentDay: liability.repaymentDay,
         note: liability.note,
       }
-      typeIndex.value = typeOptions.indexOf(liability.type)
+      typeIndex.value = typeOptions.value.indexOf(liability.type)
       repaymentDayIndex.value = liability.repaymentDay > 0 ? liability.repaymentDay - 1 : 0
     }
   }
@@ -69,7 +70,7 @@ onLoad((options?: any) => {
 function onTypeChange(e: any) {
   const idx = e.detail.value
   typeIndex.value = idx
-  form.value.type = typeOptions[idx]
+  form.value.type = typeOptions.value[idx]
 }
 
 function onRepaymentDayChange(e: any) {
@@ -147,10 +148,10 @@ function handleSave() {
         <input v-model="form.name" class="form-input" placeholder="请输入负债名称" maxlength="50" />
       </FormField>
 
-      <FormField label="负债类型" required>
-        <picker :value="typeIndex" :range="typeOptions" range-key="label" @change="onTypeChange">
+      <FormField v-if="!isTypePreset" label="负债类型" required>
+        <picker :value="typeIndex" :range="typeLabels" @change="onTypeChange">
           <view class="form-picker">
-            <text>{{ LIABILITY_TYPE_LABELS[form.type] }}</text>
+            <text>{{ customLiabilityTypeStore.getLabel(form.type) }}</text>
             <text class="arrow">›</text>
           </view>
         </picker>

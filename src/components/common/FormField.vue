@@ -31,17 +31,17 @@ defineProps<{
   display: block;
   font-size: 28rpx;
   font-weight: 500;
-  color: #333;
+  color: $text-primary;
   margin-bottom: 12rpx;
 }
 
 .required {
-  color: #f44336;
+  color: $danger-color;
 }
 
 .form-error {
   font-size: 24rpx;
-  color: #f44336;
+  color: $danger-color;
   margin-top: 8rpx;
 }
 
@@ -74,7 +74,7 @@ defineProps<{
 }
 
 :deep(.placeholder) {
-  color: #999;
+  color: $text-hint;
 }
 
 :deep(.arrow) {

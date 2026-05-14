@@ -5,14 +5,16 @@ import FormActions from '@/components/common/FormActions.vue'
 import FormField from '@/components/common/FormField.vue'
 import FormSection from '@/components/common/FormSection.vue'
 import { useAssetStore } from '@/stores/asset'
-import { ASSET_TYPE_LABELS, ASSET_CATEGORIES, VALUATION_METHOD_LABELS } from '@/types'
+import { useCustomAssetTypeStore } from '@/stores/customAssetType'
+import { ASSET_CATEGORIES, VALUATION_METHOD_LABELS } from '@/types'
 import type { AssetType, ValuationMethod } from '@/types'
 
 const assetStore = useAssetStore()
+const customTypeStore = useCustomAssetTypeStore()
 
 const isEdit = ref(false)
 const editId = ref('')
-const isCustomAssetMode = ref(false)
+const isTypePreset = ref(false)
 const isCustomCategory = ref(false)
 
 const form = ref({
@@ -29,14 +31,15 @@ const form = ref({
 
 const errors = ref<Record<string, string>>({})
 
-const typeOptions: AssetType[] = ['cash', 'fixed', 'investment', 'credit', 'other']
+const typeOptions = computed(() => customTypeStore.allAssetTypes)
 const valuationOptions: ValuationMethod[] = ['market', 'cost', 'income', 'net']
 
 const categoryOptions = computed(() => {
   return ASSET_CATEGORIES[form.value.type] ?? []
 })
 
-const typeIndex = computed(() => typeOptions.indexOf(form.value.type))
+const typeIndex = computed(() => typeOptions.value.indexOf(form.value.type))
+const typeLabels = computed(() => typeOptions.value.map((t) => customTypeStore.getLabel(t)))
 const valuationIndex = computed(() => valuationOptions.indexOf(form.value.valuationMethod))
 const categoryIndex = computed(() => {
   const idx = categoryOptions.value.indexOf(form.value.category)
@@ -44,10 +47,10 @@ const categoryIndex = computed(() => {
 })
 
 onLoad((options?: any) => {
-  isCustomAssetMode.value = options?.custom === '1'
-  if (isCustomAssetMode.value) {
-    form.value.type = 'other'
-    isCustomCategory.value = true
+  const presetType = options?.type
+  if (presetType) {
+    form.value.type = presetType
+    isTypePreset.value = true
   }
 
   const id = options?.id
@@ -80,12 +83,9 @@ onLoad((options?: any) => {
 
 function onTypeChange(e: any) {
   const idx = e.detail.value
-  form.value.type = typeOptions[idx]
+  form.value.type = typeOptions.value[idx]
   form.value.category = ''
   form.value.customCategory = ''
-  if (isCustomAssetMode.value) {
-    isCustomCategory.value = true
-  }
 }
 
 function onCategoryChange(e: any) {
@@ -186,18 +186,18 @@ function handleSave() {
         <input v-model="form.name" class="form-input" placeholder="请输入资产名称" maxlength="50" />
       </FormField>
 
-      <FormField label="资产类型" required>
-        <picker :value="typeIndex" :range="typeOptions" range-key="label" @change="onTypeChange">
+      <FormField v-if="!isTypePreset" label="资产类型" required>
+        <picker :value="typeIndex" :range="typeLabels" @change="onTypeChange">
           <view class="form-picker">
             <text :class="form.type ? '' : 'placeholder'">
-              {{ ASSET_TYPE_LABELS[form.type] }}
+              {{ customTypeStore.getLabel(form.type) }}
             </text>
             <text class="arrow">›</text>
           </view>
         </picker>
       </FormField>
 
-      <FormField label="资产分类" :error="errors.category">
+      <FormField v-if="!isTypePreset" label="资产分类" :error="errors.category">
         <picker
           v-if="!isCustomCategory"
           :value="categoryIndex"
@@ -308,7 +308,7 @@ function handleSave() {
 .category-mode-toggle {
   display: inline-block;
   margin-top: 10rpx;
-  color: #2979ff;
+  color: $primary-color;
   font-size: 24rpx;
 }
 
@@ -324,10 +324,10 @@ function handleSave() {
 }
 
 .history-list {
-  background: #fff;
-  border-radius: 16rpx;
+  background: $card-bg;
+  border-radius: $card-radius;
   overflow: hidden;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+  box-shadow: $card-shadow;
 }
 
 .history-item {
@@ -346,13 +346,13 @@ function handleSave() {
   .history-date {
     display: block;
     font-size: 26rpx;
-    color: #333;
+    color: $text-primary;
   }
 
   .history-note {
     display: block;
     font-size: 24rpx;
-    color: #999;
+    color: $text-hint;
     margin-top: 4rpx;
   }
 }
@@ -360,6 +360,6 @@ function handleSave() {
 .history-value {
   font-size: 28rpx;
   font-weight: 600;
-  color: #4caf50;
+  color: $success-color;
 }
 </style>

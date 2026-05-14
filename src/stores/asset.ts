@@ -2,35 +2,10 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Asset, ValuationHistory } from '@/types'
 import { mockAssets, mockValuationHistories } from '@/mock'
+import { loadFromStorage, saveToStorage, today } from '@/utils/storage'
 
 function genId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8)
-}
-
-function today(): string {
-  const d = new Date()
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${y}-${m}-${day}`
-}
-
-function loadFromStorage<T>(key: string, fallback: T): T {
-  try {
-    const raw = uni.getStorageSync(key)
-    if (raw) return JSON.parse(raw) as T
-  } catch (_) {
-    /* ignore */
-  }
-  return fallback
-}
-
-function saveToStorage(key: string, data: unknown) {
-  try {
-    uni.setStorageSync(key, JSON.stringify(data))
-  } catch (_) {
-    /* ignore */
-  }
 }
 
 export const useAssetStore = defineStore('asset', () => {
